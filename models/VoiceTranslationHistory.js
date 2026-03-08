@@ -1,13 +1,13 @@
 const mongoose = require('mongoose');
 
-const translationHistorySchema = new mongoose.Schema({
+const voiceTranslationHistorySchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true,
     index: true
   },
-  sourceText: {
+  spokenText: {
     type: String,
     required: true
   },
@@ -23,18 +23,20 @@ const translationHistorySchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  translationType: {
-    type: String,
-    enum: ['text', 'voice'],
-    default: 'text'
+  audioPlayed: {
+    type: Boolean,
+    default: false
+  },
+  sessionId: {
+    type: String // For grouping conversations
+  },
+  duration: {
+    type: Number // Duration in seconds
   },
   isFavorite: {
     type: Boolean,
     default: false
   },
-  tags: [{
-    type: String
-  }],
   createdAt: {
     type: Date,
     default: Date.now,
@@ -42,7 +44,7 @@ const translationHistorySchema = new mongoose.Schema({
   }
 });
 
-// Index for faster queries
-translationHistorySchema.index({ userId: 1, createdAt: -1 });
+voiceTranslationHistorySchema.index({ userId: 1, createdAt: -1 });
+voiceTranslationHistorySchema.index({ userId: 1, sessionId: 1 });
 
-module.exports = mongoose.model('TranslationHistory', translationHistorySchema);
+module.exports = mongoose.model('VoiceTranslationHistory', voiceTranslationHistorySchema);

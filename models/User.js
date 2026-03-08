@@ -19,6 +19,28 @@ const userSchema = new mongoose.Schema({
     required: [true, 'Please add a password'],
     minlength: 6
   },
+  preferences: {
+    defaultSourceLang: {
+      type: String,
+      default: 'en'
+    },
+    defaultTargetLang: {
+      type: String,
+      default: 'es'
+    },
+    ttsVoice: {
+      type: String,
+      default: 'default'
+    },
+    ttsSpeed: {
+      type: Number,
+      default: 1.0
+    },
+    ttsPitch: {
+      type: Number,
+      default: 1.0
+    }
+  },
   createdAt: {
     type: Date,
     default: Date.now
