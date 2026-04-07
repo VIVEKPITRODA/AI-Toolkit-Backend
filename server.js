@@ -14,11 +14,17 @@ const app = express();
 connectDB();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// ADD THIS: Log all requests
+// Log all requests
 app.use((req, res, next) => {
   console.log(`${req.method} ${req.path}`);
   console.log('Body:', req.body);
@@ -33,13 +39,13 @@ app.use('/api/flashcards', require('./routes/flashcardRoutes'));
 
 // Test route
 app.get('/', (req, res) => {
-  res.json({ 
+  res.json({
     message: 'AI Toolkit Hub API is running',
     version: '1.0.0'
   });
 });
 
-// Error handler middleware (must be last)
+// Error handler middleware
 app.use(errorHandler);
 
 // Start server
