@@ -19,6 +19,13 @@ const userSchema = new mongoose.Schema({
     required: [true, 'Please add a password'],
     minlength: 6
   },
+  
+  resetPasswordToken: {
+  type: String,
+},
+resetPasswordExpire: {
+  type: Date,
+},
   preferences: {
     defaultSourceLang: {
       type: String,
@@ -45,6 +52,7 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   }
+
 });
 
 // Hash password before saving

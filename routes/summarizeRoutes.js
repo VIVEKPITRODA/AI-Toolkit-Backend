@@ -5,4 +5,5 @@ const { protect } = require('../middleware/auth');
 
 router.post('/', protect, summarizeText);
 
+
 module.exports = router;
