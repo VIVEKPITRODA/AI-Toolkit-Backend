@@ -69,7 +69,6 @@ const flashcardSchema = new mongoose.Schema({
 // Update updatedAt on save
 flashcardSchema.pre('save', function(next) {
   this.updatedAt = Date.now();
-  next();
 });
 
 flashcardSchema.index({ userId: 1, createdAt: -1 });

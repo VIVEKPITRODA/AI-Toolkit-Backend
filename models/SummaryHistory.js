@@ -1,55 +1,42 @@
-const mongoose = require('mongoose');
+// backend/models/SummaryHistory.js
+const mongoose = require("mongoose");
 
-const summaryHistorySchema = new mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
-    index: true
+const summaryHistorySchema = new mongoose.Schema(
+  {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+      index: true,
+    },
+    originalText: {
+      type: String,
+      required: true,
+    },
+    summaryText: {
+      type: String,
+      required: true,
+    },
+    summaryLength: {
+      type: String,
+      enum: ["short", "medium", "long"],
+      default: "medium",
+    },
+    outputFormat: {
+      type: String,
+      enum: ["paragraph", "bullets", "tldr"],
+      default: "paragraph",
+    },
+    wordCount: {
+      original: { type: Number, default: 0 },
+      summary:  { type: Number, default: 0 },
+    },
   },
-  originalText: {
-    type: String,
-    required: true
-  },
-  summaryText: {
-    type: String,
-    required: true
-  },
-  summaryLength: {
-    type: String,
-    enum: ['short', 'medium', 'detailed'],
-    default: 'medium'
-  },
-  outputFormat: {
-    type: String,
-    enum: ['bullets', 'paragraph'],
-    default: 'paragraph'
-  },
-  keySentences: [{
-    type: String
-  }],
-  title: {
-    type: String,
-    default: 'Untitled Summary'
-  },
-  isFavorite: {
-    type: Boolean,
-    default: false
-  },
-  tags: [{
-    type: String
-  }],
-  wordCount: {
-    original: Number,
-    summary: Number
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-    index: true
+  {
+    timestamps: true,
   }
-});
+);
 
 summaryHistorySchema.index({ userId: 1, createdAt: -1 });
 
-module.exports = mongoose.model('SummaryHistory', summaryHistorySchema);
+module.exports = mongoose.model("SummaryHistory", summaryHistorySchema);
